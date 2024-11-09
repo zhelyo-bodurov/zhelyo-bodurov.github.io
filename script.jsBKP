@@ -1,0 +1,162 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loader");
+    const body = document.body;
+    const langToggleBtn = document.getElementById('lang-toggle');
+    const elementsToTranslate = {
+        "header-name": { en: "Zhelyo Bodurov", bg: "Жельо Бодуров" },
+        "nav-about": { en: "About", bg: "За мен" },
+        "nav-experience": { en: "Experience", bg: "Опит" },
+        "nav-education": { en: "Education", bg: "Образование" },
+        "nav-contact": { en: "Contact", bg: "Контакт" },
+        "about-title": { en: "About Me", bg: "За мен" },
+        "about-birthdate": { en: "Birth date: 23.04.1992", bg: "Дата на раждане: 23.04.1992" },
+        "about-gender": { en: "Gender: Male", bg: "Пол: Мъж" },
+        "about-languages": { en: "Languages: Bulgarian (Native), English (Fluent)", bg: "Езици: Български (Роден), Английски (Свободно)" },
+        "about-skills": { en: "Computer Skills: Microsoft Access, WordPress, Fundamental C# skills, Basic JavaScript skills, SQL, HTML", bg: "Компютърни умения: Microsoft Access, WordPress, Основни умения по C#, Основни умения по JavaScript, SQL, HTML" },
+        "github-link": { en: "GitHub", bg: "GitHub" },
+        "about-driving": { en: "Driving License, category: B, C", bg: "Шофьорска книжка, категория: B, C" },
+        "experience-title": { en: "Work Experience", bg: "Професионален Опит" },
+        "job-title": { en: "Customer/Technical Support at SiteGround", bg: "Клиентска/Техническа поддръжка в SiteGround" },
+        "job-location": { en: "Stara Zagora, Business sector: Information technologies", bg: "Стара Загора, Сектор: Информационни технологии" },
+        "job-description1": { en: "Customer and technical support, WordPress, Joomla, Laravel", bg: "Клиентска и техническа поддръжка, WordPress, Joomla, Laravel" },
+        "job-description2": { en: "Troubleshooting DNS domain issues", bg: "Отстраняване на проблеми с DNS домейни" },
+        "job-description3": { en: "Resolving application performance inquiries", bg: "Разрешаване на проблеми с производителността на приложения" },
+        "job-description4": { en: "SSH", bg: "SSH" },
+        "job-duration": { en: "March 2023 - Present", bg: "Март 2023 - До момента" },
+        "education-title": { en: "Education", bg: "Образование" },
+        "education-program": { en: 'Software Technologies and Design at Plovdiv University "Paisii Hilendarski"', bg: 'Софтуерни Технологии и Дизайн в Пловдивски Университет "Паисий Хилендарски"' },
+        "education-location": { en: "Plovdiv, Bulgaria", bg: "Пловдив, България" },
+        "education-degree": { en: "Bachelor's degree", bg: "Бакалавърска степен" },
+        "education-duration": { en: "September 2020 - Present", bg: "Септември 2020 - До момента" },
+        "contact-title": { en: "Contact", bg: "Контакт" },
+        "contact-name-label": { en: "Name:", bg: "Име:" },
+        "contact-email-label": { en: "Email:", bg: "Имейл:" },
+        "contact-message-type-label": { en: "Message Type:", bg: "Тип Съобщение:" },
+        "contact-message-type-placeholder": { en: "Select a type", bg: "Изберете тип" },
+        "contact-message-job-offer": { en: "Job offer", bg: "Предложение за работа" },
+        "contact-message-personal-question": { en: "Personal question", bg: "Личен въпрос" },
+        "contact-message-meeting-request": { en: "Meeting request", bg: "Заявка за среща" },
+        "contact-message-label": { en: "Message:", bg: "Съобщение:" },
+        "contact-submit-button": { en: "Send Message", bg: "Изпрати съобщение" },
+        "footer-text": { en: "© 2024 Zhelyo Bodurov. All rights reserved.", bg: "© 2024 Жельо Бодуров. Всички права запазени." },
+        "phone": { en: "Phone: 0899946802", bg: "Телефон: 0899946802" },
+        "linkedin-link": { en: "LinkedIn", bg: "LinkedIn" }
+    };
+
+    // Function to hide loader and show content
+    const hideLoader = () => {
+        loader.style.display = "none";
+        body.classList.add("fade-in");
+    };
+
+    // Hide loader after a short delay
+    setTimeout(hideLoader, 1000); // 1 second delay
+
+    // Get current language from localStorage or default to 'en'
+    let currentLang = localStorage.getItem('language') || 'en';
+
+    // Function to update elements with the current language
+    const updateLanguage = () => {
+        Object.keys(elementsToTranslate).forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = elementsToTranslate[id][currentLang];
+            }
+        });
+        // Update toggle button text
+        langToggleBtn.textContent = currentLang === 'bg' ? 'ENG' : 'BG';
+    };
+
+    // Function to switch language
+    const switchLanguage = () => {
+        currentLang = currentLang === 'en' ? 'bg' : 'en';
+        localStorage.setItem('language', currentLang); // Save the selected language
+        updateLanguage();
+    };
+
+    // Add an event listener to the language toggle button
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', switchLanguage);
+    }
+
+    // Set initial language content
+    updateLanguage(); // Initializes with saved or default language
+
+    // Form submission handling
+    const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const formMessage = document.getElementById('formMessage');
+
+        // Send form data using Fetch API
+        fetch('contact.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            formMessage.textContent = data;
+            formMessage.style.color = data.includes("successfully") ? '#78cf50' : '#F2522E';
+            
+            // If the message is successful, display it and then fade out
+            if (data.includes("successfully")) {
+                formMessage.style.opacity = '1'; // Ensure message is fully visible
+                contactForm.reset();
+
+                // After 3 seconds, fade out the message and scroll to top
+                setTimeout(() => {
+                    formMessage.style.transition = 'opacity 1s ease-out';
+                    formMessage.style.opacity = '0'; // Start fading out
+
+                    // Scroll to the top once the fade-out starts
+                    setTimeout(() => {
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+
+                        // Reset formMessage content and styles after fade out
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                            formMessage.style.opacity = '';
+                            formMessage.style.transition = '';
+                        }, 1000); // Wait for fade-out transition to complete
+                    }, 1000); // Wait for message fade-out to start
+                }, 3000); // 3 seconds delay before starting fade out
+            }
+        })
+        .catch(() => {
+            formMessage.textContent = 'An error occurred. Please try again.';
+            formMessage.style.color = '#F2522E'; // Error color
+        });
+    });
+}
+
+
+    // Handle flip card click events
+    const flipCards = document.querySelectorAll('.flip-card');
+    flipCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+    });
+
+    // Scroll to Top Button functionality
+    const myButton = document.getElementById("myBtn");
+
+    // Show the button when the user scrolls down 20px from the top of the document
+    window.onscroll = () => {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            myButton.style.display = "block";
+        } else {
+            myButton.style.display = "none";
+        }
+    };
+
+    // Scroll to the top when the user clicks the button
+    myButton.onclick = () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    };
+});
