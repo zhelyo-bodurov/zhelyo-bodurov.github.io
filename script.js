@@ -14,7 +14,7 @@ const elementsToTranslate = {
     "about-languages": { en: "Languages: Bulgarian (Native), English (Fluent)", bg: "Езици: Български (Роден), Английски (Свободно)" },
     "about-skills": { en: "Computer Skills: Microsoft Access, WordPress, Fundamental C# skills, Basic JavaScript skills, SQL, HTML", bg: "Компютърни умения: Microsoft Access, WordPress, Основни умения по C#, Основни умения по JavaScript, SQL, HTML" },
     "github-link": { en: "GitHub", bg: "GitHub" },
-    "about-driving": { en: "Driving License, category: B, C", bg: "Шофьорска книжка, категория: B, C" },
+    "about-driving": { en: "Driving License - category: B, C", bg: "Шофьорска книжка - категория: B, C" },
     "experience-title": { en: "Work Experience", bg: "Професионален Опит" },
     "job-title-siteground": { en: "Customer/Technical Support at SiteGround", bg: "Клиентска/Техническа поддръжка в SiteGround" },
     "job-location-siteground": { en: "Stara Zagora, Business sector: Information Technologies", bg: "Стара Загора, Сектор: Информационни технологии" },
