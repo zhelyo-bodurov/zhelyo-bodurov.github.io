@@ -52,7 +52,8 @@ const elementsToTranslate = {
         },
         "education-location": { en: "Plovdiv, Bulgaria", bg: "Пловдив, България" },
         "education-degree": { en: "Bachelor's degree", bg: "Бакалавърска степен" },
-        "education-duration": { en: "September 2020 - Present", bg: "Септември 2020 - До момента" }
+        "education-duration": { en: "September 2020 - Present", bg: "Септември 2020 - До момента" },
+        "contact-title": {en: "Contact", bg: "Контакт" }
 };
 
     // Function to hide loader and show content
